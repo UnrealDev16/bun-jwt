@@ -2,7 +2,7 @@
 JWT for Bun
 
 # How to add this to your project
-1. ```curl https://raw.githubusercontent.com/UnrealDev16/bun-jwt/main/JWT.js```
+1. ```wget https://raw.githubusercontent.com/UnrealDev16/bun-jwt/main/JWT.js```
 2. Import
 ```js
 import { createJWT, verifyJWT } from "path-to-JWT.js"
