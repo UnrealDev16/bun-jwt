@@ -29,18 +29,20 @@ function createJWT(payload, expiresIn) {
 }
 
 function verifyJWT(jwt) {
-  const [encodedHeader, encodedPayload, receivedSignature] = jwt.split('.')
-
-  const signature = crypto.createHmac('sha256', Bun.env.JWT_KEY).update(`${encodedHeader}.${encodedPayload}`).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
-
-  const decodedPayload = JSON.parse(Buffer.from(encodedPayload, 'base64').toString('utf-8'))
-
-  const currentTimestamp = Math.floor(Date.now() / 1000)
-
-  if (signature === receivedSignature && decodedPayload.exp >= currentTimestamp) {
-    return decodedPayload
-  } else {
-    return null
+  if(jwt)
+    const [encodedHeader, encodedPayload, receivedSignature] = jwt.split('.')
+  
+    const signature = crypto.createHmac('sha256', Bun.env.JWT_KEY).update(`${encodedHeader}.${encodedPayload}`).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
+  
+    const decodedPayload = JSON.parse(Buffer.from(encodedPayload, 'base64').toString('utf-8'))
+  
+    const currentTimestamp = Math.floor(Date.now() / 1000)
+  
+    if (signature === receivedSignature && decodedPayload.exp >= currentTimestamp) {
+      return decodedPayload
+    } else {
+      return null
+    }
   }
 }
 
