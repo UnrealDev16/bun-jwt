@@ -29,7 +29,7 @@ function createJWT(payload, expiresIn) {
 }
 
 function verifyJWT(jwt) {
-  if(jwt)
+  if(jwt) {
     const [encodedHeader, encodedPayload, receivedSignature] = jwt.split('.')
   
     const signature = crypto.createHmac('sha256', Bun.env.JWT_KEY).update(`${encodedHeader}.${encodedPayload}`).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
@@ -43,6 +43,8 @@ function verifyJWT(jwt) {
     } else {
       return null
     }
+  } else {
+    return null
   }
 }
 
